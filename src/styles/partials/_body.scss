@@ -1,0 +1,15 @@
+$body-color: #efefef;
+.body {
+	@include container(80rem);
+
+
+	&__content {
+		@include span(12);
+		align-items: center;
+		background-color: $body-color;
+		display: flex;
+		height: calc(100vh - #{$header-height} - #{$footer-height});
+		min-height: $min-app-height;
+		justify-content: center;
+	}
+}

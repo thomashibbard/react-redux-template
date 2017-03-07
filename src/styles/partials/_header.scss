@@ -1,0 +1,29 @@
+.header {
+	@include container(80rem);
+	// background-color: violet;
+	text-transform: uppercase;
+	text-align: center;
+
+ 	[class*="content"] {
+		display: table;
+		height: $header-height;
+
+ 	}
+
+	&__item {
+			display: table-cell;
+			vertical-align: middle;
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+
+	&__content-a,
+	&__content-c {
+		@include span(3);
+		background-color: $medium-highlight-color;
+	}
+	&__content-b {
+		@include span(6);
+		background-color: $light-highlight-color;
+	}
+}
