@@ -1,22 +1,33 @@
-import React from "react";
+import React from 'react';
 
-const Body = () => {
-
-	const state = {
-		arr: [1, 2, 3, 4]
+class Contacts extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			nums: [1, 2, 3, 4]
+		};
+		this.handleClick = this.handleClick.bind(this);
 	}
-	const list = state.arr.map(item => {
+	handleClick(evt) {
+		evt.currentTarget.style.color = 'red';
+	}
+	getList() {
+		return this.state.nums.map((item, index) => {
+			return (
+				<li key={index.toString()}
+						onClick={this.handleClick}>{item}</li>
+			);
+		});
+	}
+	render() {
 		return (
-			<li>body content {item}</li>
+			<main className="body">
+				<section className="body__content">
+					<ul>{this.getList()}</ul>
+				</section>
+			</main>
 		);
-	});
-	return (
-		<main className="body">
-			<section className="body__content">
-				<ul>{list}</ul>
-			</section>
-		</main>
-	);
-};
+	}
+}
 
-export default Body;
+export default Contacts;

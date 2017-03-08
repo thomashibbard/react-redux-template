@@ -6,9 +6,13 @@
 /*settings*/
 @import "./settings/ni-grid-settings";
 
-/*partials*/
+/*utils*/
 @import "./utilities/globals";
-@import "./utilities/resets";
+@import "./utilities/mixins-and-extends";
+@import "./utilities/wrapper";
+@import "./utilities/shame";
+
+/*partials*/
 @import "./partials/header";
 @import "./partials/body";
 @import "./partials/footer";
