@@ -1,4 +1,4 @@
-# Simple NPM Scripts React/Redux Boilerplate
+# React/Redux Boilerplate
 
 ##### Install global packages
 
