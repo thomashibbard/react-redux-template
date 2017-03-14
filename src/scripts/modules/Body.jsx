@@ -1,6 +1,7 @@
 import React from 'react';
+import { createStore } from 'redux';
 
-class Contacts extends React.Component {
+class Body extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -13,6 +14,7 @@ class Contacts extends React.Component {
 	}
 	getList() {
 		return this.state.nums.map((item, index) => {
+			debugger;
 			return (
 				<li key={index.toString()}
 						onClick={this.handleClick}>{item}</li>
@@ -30,4 +32,4 @@ class Contacts extends React.Component {
 	}
 }
 
-export default Contacts;
+export default Body;
