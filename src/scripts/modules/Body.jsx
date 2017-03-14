@@ -5,7 +5,7 @@ class Body extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			nums: [1, 2, 3, 4]
+			nums: [1, 2, 3],
 		};
 		this.handleClick = this.handleClick.bind(this);
 	}
@@ -14,7 +14,6 @@ class Body extends React.Component {
 	}
 	getList() {
 		return this.state.nums.map((item, index) => {
-			debugger;
 			return (
 				<li key={index.toString()}
 						onClick={this.handleClick}>{item}</li>
