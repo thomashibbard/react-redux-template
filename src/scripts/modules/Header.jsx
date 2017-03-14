@@ -14,6 +14,9 @@ class Header extends React.Component {
 				<div className="header__content-c">
 					<p className="header__item">content</p>
 				</div>
+				<div className="header__content-d">
+					<p className="header__item">content</p>
+				</div>
 			</header>
 		);
 	}

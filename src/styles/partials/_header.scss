@@ -3,12 +3,16 @@
   text-transform: uppercase;
   text-align: center;
 
-
-
   [class*="content"] {
-    display: table;
+    @include span(3);
+    align-items: center;
+    background-color: $light-highlight-color;
+    display: flex;
+    justify-content: center;
     height: $header-height;
-
+    @include breakpoint($small) {
+     @include span(full inside no-gutter);
+    }
   }
 
   &__item {
@@ -17,29 +21,5 @@
     margin-top: 0;
     margin-bottom: 0;
 
-    @breakpoint($small) {
-      display: block;
-    }
-  }
-
-  &__content-a,
-  &__content-c {
-    @include span(3);
-    background-color: $medium-highlight-color;
-  }
-
-  &__content-b {
-    @include span(6);
-    background-color: $light-highlight-color;
-  }
-
-  &__content-a,
-  &__content-c,
-  &__content-b {
-
-     @include breakpoint($small) {
-
-       @include span(full inside no-gutter);
-     }
   }
 }
