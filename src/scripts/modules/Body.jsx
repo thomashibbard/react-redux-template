@@ -2,6 +2,7 @@ import React from 'react';
 import { createStore } from 'redux';
 
 class Body extends React.Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -9,9 +10,11 @@ class Body extends React.Component {
 		};
 		this.handleClick = this.handleClick.bind(this);
 	}
+
 	handleClick(evt) {
 		evt.currentTarget.style.color = 'red';
 	}
+
 	getList() {
 		return this.state.nums.map((item, index) => {
 			return (
@@ -20,6 +23,7 @@ class Body extends React.Component {
 			);
 		});
 	}
+
 	render() {
 		return (
 			<main className="body">

@@ -1,5 +1,5 @@
 {
-  "name": "simple-react-boilerplate",
+  "name": "react-redux-boilerplate",
   "version": "0.0.1",
   "description": "simple react boilerplate using npm scripts",
   "main": "index.js",
@@ -15,7 +15,7 @@
     "browsersync": "browser-sync start --proxy localhost:5501 --files ./dist/styles/main.css ./index.html ./dist/scripts/bundle.js",
     "start": "npm-run-all --parallel start:server browsersync watch:js watch:styles"
   },
-  "author": "Thomas Hibbard <thomas.hibbard@networkedinsights.com>",
+  "author": "Thomas Hibbard <loren.hibbard@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.7.6",
