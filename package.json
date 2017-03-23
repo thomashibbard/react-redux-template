@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "sourcemap": "browserify ./dist/scripts/bundle.js -d | exorcist ./dist/scripts/bundle.js.map > ./dist/scripts/bundle.js",
+    "first-run:styles": "node-sass -r --output-style expanded --indent-type tab --source-map-embed --include-path node_modules/susy/sass --include-path node_modules/breakpoint-sass/stylesheets src/styles/ -o dist/styles ",
     "lint:js": "eslint --ext jsx ./src/scripts/**/*; exit 0",
     "lint:styles": "sass-lint ./src/styles/**/*.scss --verbose; exit 0",
     "watch:js": "watchify src/scripts/index.jsx -o dist/scripts/bundle.js -v -t [ babelify --presets [ react es2015 ] ]",
     "watch:styles": "node-sass -wr --output-style expanded --indent-type tab --source-map-embed --include-path node_modules/susy/sass --include-path node_modules/breakpoint-sass/stylesheets src/styles/ -o dist/styles ",
     "build:js": "uglifyjs ./dist/scripts/bundle.js -o ./dist/scripts/bundle.min.js --source-map ./dist/scripts/bundle.min.js.map",
-    "build:styles": "postcss --use autoprefixer -b 'last 2 versions' < dist/styles/main.css | postcss --use cssnano > dist/styles/main.min.css",
+    "build:styles": "node-sass -r postcss --use autoprefixer -b 'last 2 versions' < dist/styles/main.css | postcss --use cssnano > dist/styles/main.min.css",
     "start:server": "node server.js",
     "browsersync": "browser-sync start --proxy localhost:5501 --files ./dist/styles/main.css ./index.html ./dist/scripts/bundle.js",
-    "start": "npm-run-all --parallel start:server browsersync watch:js watch:styles"
+    "start": "npm-run-all --parallel first-run:styles start:server browsersync watch:js watch:styles"
   },
   "author": "Thomas Hibbard <loren.hibbard@gmail.com>",
   "license": "MIT",
