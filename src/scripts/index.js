@@ -46,9 +46,9 @@ $(function() {
 	);
 
 	const processPosts = posts => (
-		posts.resultset
+		(posts.resultset
 			.map(post => (
-				 {
+				{
 					dateReceived: post[0],
 					postDate: post[1],
 					id: post[2],
@@ -56,6 +56,10 @@ $(function() {
 				}
 			)
 		)
+		.sort((a, b) => (
+				(new Date(b.postDate) - new Date(a.postDate))
+			)
+		))
 	);
 
 
@@ -112,6 +116,23 @@ $(function() {
 		$.get(`${API_ROOT_ADDRESS}/api/getFullPostsByInterestType/`)
 	);
 
+	const mosonrizeGrid = (firstLoad) => {
+		console.log('masonirizing......');
+		// setTimeout(() => {
+			// if(firstLoad) {
+				// $('.grid .grid-item').remove();
+				$('.grid').masonry({
+					itemSelector: '.grid-item',
+					columnWidth: 10,
+					gutter: 30,
+				});
+			// }else{
+				// $('.grid').masonry();
+			// }
+
+		// }, 3000);
+	}
+
 	$.when(
 		getFullInterestTypes(),
 		getPosts(),
@@ -135,16 +156,14 @@ $(function() {
 
 	const buildPosts = postsData => {
 		postsData = processPosts(postsData);
+		console.log(postsData);
 
 		const $postsHook = $('#posts_list_hook');
 		const postsTmpl = $('#posts_list_tmpl').html();
 		const postsRend = _.template(postsTmpl)({ postsData });
 		$postsHook.html(postsRend);
-		$('.grid').masonry({
-				itemSelector: '.grid-item',
-				columnWidth: 10,
-				gutter: 30
-			});
+		mosonrizeGrid(true);
+
 	};
 
 	const bindinterestGroupsClick = () => {
@@ -164,8 +183,9 @@ $(function() {
 				)
 				.done((interestsByInterestTypeRes, postsByGroupRes) => {
 
-					// updatePosts(postsByGroupRes[0]);
+					buildPosts(postsByGroupRes[0]);
 					updateInterests(interestsByInterestTypeRes[0], $currentlyToggling);
+					mosonrizeGrid();
 				});
 
 			}

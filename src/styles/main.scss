@@ -323,8 +323,8 @@ $container-sizes: (
 }
 
 
-* { box-sizing: border-box; }
-body {padding-top: 50px;}
+// * { box-sizing: border-box; }
+// body {padding-top: 50px;}
 .overflow-text--hidden {
   display: none;
 }
@@ -351,28 +351,21 @@ body {padding-top: 50px;}
 /* ---- grid ---- */
 
 .grid {
-  height: 100vh;
+  min-height: 100vh;
   max-width: 1170px;
 
 }
 
 /* clearfix */
 .grid:after {
-  content: '';
-  display: block;
-  clear: both;
+  // content: '';
+  // display: block;
+  // clear: both;
 }
 
 /* ---- grid-item ---- */
 
-.grid-item {
-  width: 250px;
-  float: left;
-  overflow: auto;
-  margin-bottom: 5px;
-  display: block;
 
-}
 
 
 
@@ -383,50 +376,66 @@ $post-date-background: #f7f7f7;
 $post-padding: 15px;
 $post-text-color: #f37136;
 
-
+#posts_list_hook {
+  width: 100%;
+}
 .posts-container { //namespace
 
   .post-items__row {
-    display: flex;
+    // color: green;
+    // display: flex;
     margin-bottom: 15px;
+    // width: 100%;
+    // flex-flow: row wrap;
     width: 100%;
 
-    .post-item {
-      float: none;
+    .grid-item {
+      margin-bottom: 5px;
+      float: left;
+      width: 32%;
+      margin-right: 2%;
+
+      &:nth-of-type(3n+3) {
+        margin-right: 0;
+      }
+    }
+
+    .post-items {
+      // float: none;
       position: relative;
       padding: 0;
       // width: 150px;
       // width: 275px;
       // min-width: 275px;
       margin-right: 15px;
+    }
+  }
 
-      &--post-content {
-        color: $post-text-color;
-        background-color: $white;
-        border: 1px solid $card-component-border-color;
-        font-weight: bold;
-        padding: $post-padding;
-      }
+  [class$="--post-content"] {
+    color: $post-text-color;
+    background-color: $white;
+    border: 1px solid $card-component-border-color;
+    font-weight: bold;
+    padding: $post-padding;
+  }
 
-      &--post-text {
-        color: $post-text-color;
-      }
+  [class$="--post-text"] {
+    color: $post-text-color;
+  }
 
-      &--post-date {
-        background-color: $post-date-background;
-        border-color: $card-component-border-color;
-        border-style: solid;
-        border-width: 0;
-        border-bottom-width: 1px;
-        padding: $post-padding;
-        display: table;
-        width: 100%;
+  [class$="--post-date"] {
+    background-color: $post-date-background;
+    border-color: $card-component-border-color;
+    border-style: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
+    padding: $post-padding;
+    display: table;
+    width: 100%;
 
-        p {
-          display: table-cell;
-          vertical-align: middle;
-        }
-      }
+    p {
+      display: table-cell;
+      vertical-align: middle;
     }
   }
 }

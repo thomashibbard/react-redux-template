@@ -104,9 +104,8 @@
 
 		<script type="text/template" id="posts_list_tmpl">
   		<div class="post-items__row">
-		    <div class="col-xs-d12">
-			<%_.each(postsData, function(listItem, listIndex, initialArray){%>
-				<%postDate = moment(listItem.postDate).format('DD MMM YYYY')%>
+				<%_.each(postsData, function(listItem, listIndex, initialArray){%>
+					<%postDate = moment(listItem.postDate).format('DD MMM YYYY')%>
 					<div class="grid-item">
 					  <div class="post-item__container">
 					    <div class="post-item--post-content">
@@ -118,7 +117,6 @@
 					  </div>
 					</div>
 				<%});%>
-				</div>
 			</div>
 		</script>
 
