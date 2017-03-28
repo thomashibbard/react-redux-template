@@ -9,6 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="./dist/styles/main.css">
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
 		<script type="text/javascript" src="http://masonry.desandro.com/masonry.pkgd.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/isotope-layout@3.0.3/dist/isotope.pkgd.min.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -20,21 +21,27 @@
 		      <div class="col-xs-3">
 		        <h4>Kairos Classified Posts</h4>
 		      </div>
-		      <div class="col-xs-6">
-		        <h4>Study Rules</h4>
+		      <div class="col-xs-4">
 		        <div class="ni-dropdown">
 		          <select name="" id="">
-		            <option value="option1">option</option>
-		            <option value="option2">option</option>
-		            <option value="option3">option</option>
-		            <option value="option4">option</option>
+		            <option value="option4">All</option>
+		            <option value="option1">1283746187324681723</option>
+		            <option value="option2">9187394812394878239</option>
 		          </select>
 		        </div>
 		       </div>
+		       <div class="col-xs-2">
+		         <div class="ni-dropdown">
+		           <select name="" id="sort-posts--control">
+		             <option value="NEWEST_FIRST">Newest First</option>
+		             <option value="OLDEST_FIRST">Oldest First</option>
+		           </select>
+		         </div>
+		        </div>
 		    </div>
 		    <div class="row">
 		      <div class="col-xs-3">
-		        <div id="interest_group_hook"></div>
+		        <div id="interest_type_hook"></div>
 		      </div>
 		      <div class="col-xs-9">
 		      		<div id="posts_list_hook" class="grid posts-container"></div>
@@ -44,10 +51,10 @@
 		  <section id="posts_detail_hook"></section>
 		</div>
 
-		<script id="interest_group_tmpl" type="text/template">
+		<script id="interest_type_tmpl" type="text/template">
 		  <div class="interest-container">
 		    <ul class="interest-group__list">
-		      <%_.each(interestGroupsData, function(groupItem){%>
+		      <%_.each(interestTypesData, function(groupItem){%>
 		        <li class="interest-group__item">
 		          <div class="interest-group__item__container">
 		            <div class="interest-group__item--name">
@@ -63,10 +70,12 @@
 		    </ul>
 		  </div>
 		</script>
+
+
 		<script type="text/template" id="interest_tmpl">
 		  <ul class="interest__list">
 		    <%_.each(interestData, function(interestItem) {%>
-		      <li class="interest__item">
+		      <li class="interest__item" data-interest-id="<%=interestItem.id%>">
 		        <div class="interest__item--name">
 	            <span><%=interestItem.name%></span>
 		        </div>
@@ -79,7 +88,7 @@
 		</script>
 
 
-		<script type="text/template" id="posts_list_tmpl--dep">
+		<script type="text/template" id="posts_list_tmpl----dep">
 			<div class="post-items__row row">
 			<%_.each(postsData, function(listItem, listIndex, initialArray){%>
 				<%postDate = moment(listItem.postDate).format('DD MMM YYYY')%>

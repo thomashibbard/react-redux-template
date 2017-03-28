@@ -224,7 +224,7 @@ $container-sizes: (
               span {
 
                 &:after {
-                  background-image: url(../../public/images/hide-content-small-white-icon.png);
+                  background-image: url(../../../../images/hide-content-small-white-icon.png);
                 }
               }
             }
@@ -263,7 +263,7 @@ $container-sizes: (
                 right: -16px;
                 width: 10px;
                 height: 10px;
-                background-image: url(../../public/images/show-content-small-icon.png);
+                background-image: url(../../../../images/show-content-small-icon.png);
               }
             }
           }
@@ -330,20 +330,29 @@ $container-sizes: (
 }
 
 .full-text__trigger {
-  color: blue;
+  color: $main-highlight-color;
   cursor: pointer;
   display: block;
+  position: relative;
+  margin: 15px 0 0 15px;
 
   &:hover {
     text-decoration: underline;
   }
 
   &:before {
-    content: '[ ... ]';
+    content: ' ';
+    position: absolute;
+    top: 5px;
+    left: -13px;
+    width: 10px;
+    height: 10px;
+    background-image: url(../../../../images/show-content-small-icon.png);
   }
+
   &.less {
     &:before {
-      content: '[ - ]'
+      background-image: url(../../../../images/hide-content-small-icon.png);
     }
   }
 }
@@ -374,11 +383,16 @@ $card-component-border-color: #dfdfdf;
 $white: #fff;
 $post-date-background: #f7f7f7;
 $post-padding: 15px;
-$post-text-color: #f37136;
+$post-text-color: #1fa555;
 
 #posts_list_hook {
   width: 100%;
 }
+#interest_type_hook,
+#posts_list_hook {
+  margin-top: 50px;
+}
+
 .posts-container { //namespace
 
   .post-items__row {
@@ -392,8 +406,8 @@ $post-text-color: #f37136;
     .grid-item {
       margin-bottom: 5px;
       float: left;
-      width: 32%;
-      margin-right: 2%;
+      width: 260px;
+      // margin-right: px;
 
       &:nth-of-type(3n+3) {
         margin-right: 0;
@@ -415,7 +429,7 @@ $post-text-color: #f37136;
     color: $post-text-color;
     background-color: $white;
     border: 1px solid $card-component-border-color;
-    font-weight: bold;
+    font-weight: 500;
     padding: $post-padding;
   }
 
@@ -427,7 +441,7 @@ $post-text-color: #f37136;
     background-color: $post-date-background;
     border-color: $card-component-border-color;
     border-style: solid;
-    border-width: 0;
+    border-width: 0 1px;
     border-bottom-width: 1px;
     padding: $post-padding;
     display: table;
