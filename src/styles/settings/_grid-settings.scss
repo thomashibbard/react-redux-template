@@ -1,9 +1,0 @@
-@include global-box-sizing(border-box);
-$susy: (
-  columns: 12,
-  gutters: 1/4,
-  gutter-position: split,
-  g-box-sizing: border-box,
-);
-
-$grid-container-width: 64rem; //1280px;

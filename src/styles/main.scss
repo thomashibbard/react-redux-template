@@ -1,19 +1,435 @@
+@import "./compiled-main-styles";
 
-/*libs*/
-@import "susy";
-@import "breakpoint";
+//blacks, whites, greys
+$black: #000;
+$white: #FFF;
+$light-grey: #CACACA;
+$page-background-color: #F7F7F7;
 
-/*settings*/
-@import "./settings/grid-settings";
 
-/*utils*/
-@import "./utilities/globals";
-@import "./utilities/mixins-and-extends";
-@import "./utilities/wrapper";
-@import "./utilities/shame";
+//secondary colors
+$company-detail-color: #CC285C;
+$main-highlight-color: #1DAFEC;
+$input-border-color: #35BEEF;
+$container-border-color: #DFDFDF;
+$positive-emphasis-color: #4DBE5E;
 
-/*partials*/
-@import "./partials/header";
-@import "./partials/body";
-@import "./partials/footer";
+
+
+//tertiary colors
+$highlight-color-cool: #0CA5BA;
+$highlight-color-warm: #F69931;
+$highlight-color-warmer: #F9D465;
+$highlight-color-warmest: #F6702A;
+
+
+
+//fonts
+$small-label-font: normal 1.3rem sans-serif;
+$small-value-font: bold 1.3rem sans-serif;
+
+
+$container-sizes: (
+  desktop: 1170px,
+);
+
+/* extends */
+//span full width of screen WHEN NOT bound within bootstrap `.container`
+%full-screen-width-no-grid {
+  width: 100%;
+  min-width: 1170px;
+}
+
+//HACK to span full width of screen WHEN bound within bootstrap `.container`
+%span-full-width {
+  margin-left: calc(-50vw + 50%);
+  width: 100vw;
+}
+
+
+
+%basic-input-styles {
+  margin: 0;
+  padding: 4px 8px;
+  position: relative;
+  border: 1px solid #35beef;
+  border-radius: 0px;
+  overflow: hidden;
+  text-align: left;
+  background-color: $white;
+  width: 100%;
+}
+
+
+
+/* mixins */
+
+
+@mixin clearfix() {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/**
+*   @include allPseudo(true) {
+*     color: red;
+*   }
+*/
+@mixin all-pseudo ($includeParent){
+  @if($includeParent){
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      @content;
+    }
+  }@else{
+    &:hover,
+    &:focus,
+    &:active {
+      @content;
+    }
+  }
+}
+
+@mixin neutralize-link {
+  @include all-pseudo(false) {
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+  }
+}
+
+@mixin calendar-el-pseudo() {
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: lighten($input-border-color, 35%);
+  }
+
+  &:active {
+    background: lighten($input-border-color, 20%);
+    outline: none;
+  }
+
+  &:focus {
+
+  }
+}
+
+@mixin all-borders($width, $color) {
+  border-top: $width solid $color;
+  border-right: $width solid $color;
+  border-bottom: $width solid $color;
+  border-left: $width solid $color;
+}
+
+@mixin background-icon-boilerplate() {
+  content: '';
+  background-repeat: no-repeat;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+}
+
+/// Slightly lighten a color
+/// @access public
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+/// Slightly darken a color
+/// @access public
+/// @param {Color} $color - color to shade
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+
+
+
+
+.posts-detail {
+
+  &__page-header {
+    margin: 25px;
+  }
+}
+
+
+
+.interest-container {
+  background-color: $white;
+  border: 1px solid $light-grey;
+
+  [class$="__list"] {
+    list-style-type: none;
+  }
+
+  .interest-group__list {
+    margin: 0;
+    padding: 0 10px 0 10px;
+    padding-left: 0;
+    padding-right: 0;
+    // padding: 15px;
+
+
+    .interest-group {
+        // padding: 15px 0 15px 15px;
+
+      &__item {
+
+        &:not(:last-of-type) {
+          border-bottom: 1px solid $light-grey;
+        }
+
+        &:first-of-type {
+          // padding-top: 15px;
+        }
+
+        &:after {
+          @include clearfix();
+        }
+
+        &.active {
+          box-shadow: inset 0px -13px 21px -15px rgba(20,18,20,.5);
+        }
+
+        &__container {
+          align-items: flex-end;
+          cursor: pointer;
+          display: flex;
+          float: left;
+          width: 100%;
+          transition: color, background-color 0.2s;
+
+          &:hover {
+            background-color: #b8eaff;
+            // color: $white;
+          }
+
+          &.active {
+            background-color: $main-highlight-color ;
+            color: $white;
+            >[class$="--count"] {
+
+              span {
+
+                &:after {
+                  background-image: url(../../public/images/hide-content-small-white-icon.png);
+                }
+              }
+            }
+          }
+
+          [class$="--name"],
+          [class$="--count"] {
+            padding: 15px 0 15px 15px;
+          }
+
+          [class$="--name"] {
+            float: left;
+            width: 200px;
+          }
+
+          [class$="--count"] {
+            align-self: center;
+            float: left;
+            padding-left: 0;
+            padding-right: 25px;
+            word-break: break-all;
+            text-align: right;
+          }
+
+          >[class$="--count"] {
+            // border: 1px solid;
+            text-align: right;
+            width: 60px;
+            span {
+              position: relative;
+
+              &:after {
+                content: ' ';
+                position: absolute;
+                top: 3px;
+                right: -16px;
+                width: 10px;
+                height: 10px;
+                background-image: url(../../public/images/show-content-small-icon.png);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  .interest__item__hook {
+    float: left;
+    width: 100%;
+  }
+
+  [class$="__item__container"] {
+
+  }
+
+
+  .interest__list {
+    margin-left: 15px;
+    padding: 15px 0 0 0;
+    overflow-y: scroll;
+    max-height: 250px;
+
+    .interest__item {
+      cursor: pointer;
+      display: flex;
+      align-items: flex-end;
+
+      &:after {
+        @include clearfix();
+      }
+
+      &:hover,
+      &.active{
+        color: $main-highlight-color;
+      }
+    }
+
+    [class*="--name"],
+    [class*="--count"] {
+      padding: 15px;
+    }
+
+    [class$="--name"] {
+      float: left;
+      width: 140px;
+      font-size: 12px;
+    }
+
+    [class$="--count"] {
+      align-self: center;
+      float: left;
+    }
+  }
+}
+
+
+* { box-sizing: border-box; }
+body {padding-top: 50px;}
+.overflow-text--hidden {
+  display: none;
+}
+
+.full-text__trigger {
+  color: blue;
+  cursor: pointer;
+  display: block;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:before {
+    content: '[ ... ]';
+  }
+  &.less {
+    &:before {
+      content: '[ - ]'
+    }
+  }
+}
+
+/* ---- grid ---- */
+
+.grid {
+  height: 100vh;
+  max-width: 1170px;
+
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- grid-item ---- */
+
+.grid-item {
+  width: 250px;
+  float: left;
+  overflow: auto;
+  margin-bottom: 5px;
+  display: block;
+
+}
+
+
+
+
+$card-component-border-color: #dfdfdf;
+$white: #fff;
+$post-date-background: #f7f7f7;
+$post-padding: 15px;
+$post-text-color: #f37136;
+
+body {
+  background-color: $white;
+}
+.posts-container { //namespace
+
+  .post-items__row {
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+
+    .post-item {
+      float: none;
+      position: relative;
+      padding: 0;
+      // width: 150px;
+      // width: 275px;
+      // min-width: 275px;
+      margin-right: 15px;
+
+      &--post-content {
+        color: $post-text-color;
+        background-color: $white;
+        border: 1px solid $card-component-border-color;
+        font-weight: bold;
+        padding: $post-padding;
+      }
+
+      &--post-text {
+        color: $post-text-color;
+      }
+
+      &--post-date {
+        background-color: $post-date-background;
+        border-color: $card-component-border-color;
+        border-style: solid;
+        border-width: 0;
+        border-bottom-width: 1px;
+        padding: $post-padding;
+        display: table;
+        width: 100%;
+
+        p {
+          display: table-cell;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
 

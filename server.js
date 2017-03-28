@@ -7,9 +7,9 @@ const express = require('express')
 const PORT = 5501;
 
 app.use(express.static(__dirname));
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'dist', 'views'))
-app.locals.pretty = true;
+// app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'dist', 'views'))
+// app.locals.pretty = true;
 
 app.use('/dist', serveindex(path.join(__dirname, 'dist')));
 

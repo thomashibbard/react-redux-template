@@ -1,0 +1,98 @@
+Arguments: 
+  /Users/thibbard/.nvm/versions/node/v7.0.0/bin/node /usr/local/bin/yarn install
+
+PATH: 
+  /Users/thibbard/Downloads/google-cloud-sdk/bin:/Users/thibbard/.nvm/versions/node/v7.0.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin:/Applications/Postgres.app/Contents/Versions/9.5/bin:/Users/thibbard/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/bin:/opt/apache-tomcat-6.0.28/bin:/usr/local/lib/node_modules/npm/bin
+
+Yarn version: 
+  0.16.1
+
+Node version: 
+  7.0.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "react-redux-boilerplate",
+    "version": "0.0.1",
+    "description": "simple react boilerplate using npm scripts",
+    "main": "index.js",
+    "scripts": {
+      "sourcemap": "browserify ./dist/scripts/bundle.js -d | exorcist ./dist/scripts/bundle.js.map > ./dist/scripts/bundle.js",
+      "lint:js": "eslint --ext jsx ./src/scripts/**/*; exit 0",
+      "lint:styles": "sass-lint ./src/styles/**/*.scss --verbose; exit 0",
+      "watch:js": "watchify src/scripts/index.jsx -o dist/scripts/bundle.js -v -t [ babelify --presets [ react es2015 ] ]",
+      "watch:styles": "node-sass -wr --output-style expanded --indent-type tab --source-map-embed --include-path node_modules/susy/sass --include-path node_modules/breakpoint-sass/stylesheets src/styles/ -o dist/styles ",
+      "build:js": "uglifyjs ./dist/scripts/bundle.js -o ./dist/scripts/bundle.min.js --source-map ./dist/scripts/bundle.min.js.map",
+      "build:styles": "postcss --use autoprefixer -b 'last 2 versions' < dist/styles/main.css | postcss --use cssnano > dist/styles/main.min.css",
+      "start:server": "node server.js",
+      "browsersync": "browser-sync start --proxy localhost:5501 --files ./dist/styles/main.css ./index.html ./dist/scripts/bundle.js",
+      "start": "npm-run-all --parallel start:server browsersync watch:js watch:styles"
+    },
+    "author": "Thomas Hibbard <loren.hibbard@gmail.com>",
+    "license": "MIT",
+    "devDependencies": {
+      "autoprefixer": "^6.7.6",
+      "babel": "^6.23.0",
+      "babel-cli": "^6.23.0",
+      "babel-core": "^6.23.1",
+      "babel-loader": "^6.4.0",
+      "babel-preset-env": "^1.2.1",
+      "babel-preset-es2015": "^6.22.0",
+      "babel-preset-react": "^6.23.0",
+      "babelify": "^7.3.0",
+      "breakpoint-sass": "^2.7.1",
+      "browser-sync": "^2.18.8",
+      "cssnano": "^3.10.0",
+      "eslint": "^3.17.1",
+      "eslint-plugin-react": "^6.10.0",
+      "exorcist": "^0.4.0",
+      "extract-text-webpack-plugin": "^2.1.0",
+      "jquery": "^3.1.1",
+      "node-sass": "^4.5.0",
+      "postcss-cli": "^3.0.0-beta",
+      "sass-lint": "^1.10.2",
+      "start-server-webpack-plugin": "^2.1.2",
+      "uglifyjs": "^2.4.10",
+      "watchify": "^3.9.0",
+      "webpack": "^2.2.1",
+      "webpack-dev-server": "^2.4.1",
+      "webpack-node-externals": "^1.5.4"
+    },
+    "dependencies": {
+      "babel-core": "^6.23.1",
+      "babel-loader": "^6.4.0",
+      "babel-polyfill": "^6.23.0",
+      "babel-preset-env": "^1.2.1",
+      "babel-preset-react": "^6.23.0",
+      "express": "^4.15.2",
+      "fs-extra": "^2.0.0",
+      "koa": "^2.0.1",
+      "koa-static": "^3.0.0",
+      "path": "^0.12.7",
+      "pug": "^2.0.0-beta11",
+      "react": "^15.4.2",
+      "react-dom": "^15.4.2",
+      "react-hot-loader": "^1.3.1",
+      "redux": "^3.6.0",
+      "serve-index": "^1.8.0",
+      "susy": "^2.2.12"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+bower manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: connect ETIMEDOUT 35.184.0.176:8081
+      at Object.exports._errnoException (util.js:1026:11)
+      at exports._exceptionWithHostPort (util.js:1049:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1090:14)
