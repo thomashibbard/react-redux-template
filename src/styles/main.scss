@@ -401,16 +401,16 @@ $post-text-color: #1fa555;
     margin-bottom: 15px;
     // width: 100%;
     // flex-flow: row wrap;
-    width: 100%;
+    width: 810px;
 
     .grid-item {
       margin-bottom: 5px;
       float: left;
-      width: 260px;
+      width: 263px;
       // margin-right: px;
 
       &:nth-of-type(3n+3) {
-        margin-right: 0;
+        // margin-right: 0;
       }
     }
 

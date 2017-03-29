@@ -5,7 +5,9 @@
 		, bodyParser = require('body-parser')
 		, cors = require('cors')
 		, path = require('path')
-		, fs = require('fs-extra');
+		, fs = require('fs-extra')
+		, http = require('http')
+		, requestify = require('requestify');
 
 
 
@@ -114,9 +116,48 @@
 
 */
 
+const cookie = 'JSESSIONID=6EF62ACDA900EDF075535FBEA2E1DAF9';
+const headers = {
+	'Cookie': cookie
+}
+const options = {
+	hostname: '104.154.200.92',
+	port: 8080,
+	path: '/pentaho/plugin/cda/api/doQuery?path=/public/facebook_aud/fb_posts_detial.cda&dataAccessId=getFullPostsByInterestType&paramstudy_id=6053840375154&paramrule_id=%25&paraminterest_type=Brands+(Syndicated)',
+	method: 'GET',
+	headers: {
+		'Cookie': cookie
+	}
+}
 
+var url = 'http://104.154.200.92/pentaho/plugin/cda/api/doQuery?path=/public/facebook_aud/fb_posts_detial.cda&dataAccessId=getFullPostsByInterestType&paramstudy_id=6053840375154&paramrule_id=%25&paraminterest_type=Brands+(Syndicated)';
+var opt = {
+	method: 'GET',
+	cookies: cookie,
+	headers: {
+		'Access-Control-Allow-Origin': '*'
+	},
+	auth: {
+		username: 'supportadvanced@email.com',
+		password: 'decisions789'
+	}
+};
 
+const F = () => {
+	console.log('begining');
+	requestify.request(url, opt).then(function(response) {
+	    // Get the response body (JSON parsed - JSON response or jQuery object in case of XML response)
+	    console.log( response.getCode() );
+	    response.getBody();
 
+	    // Get the response raw body
+	    response.body;
+	}, (err) => {
+		console.log('err', err);
+	})
+}
+
+F();
 
 
 

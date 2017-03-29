@@ -13,78 +13,78 @@
 	</head>
 	<body>
 		<div class="container">
-		  <section class="posts-detail__page-header">
-		    <div class="row">
-		      <div class="col-xs-3">
-		        <h4 class="">Top Interest Groups</h4>
-		      </div>
-		      <div class="col-xs-3">
-		        <h4>Kairos Classified Posts</h4>
-		      </div>
-		      <div class="col-xs-4">
-		        <div class="ni-dropdown">
-		          <select name="" id="">
-		            <option value="option4">All</option>
-		            <option value="option1">1283746187324681723</option>
-		            <option value="option2">9187394812394878239</option>
-		          </select>
-		        </div>
-		       </div>
-		       <div class="col-xs-2">
-		         <div class="ni-dropdown">
-		           <select name="" id="sort-posts--control">
-		             <option value="NEWEST_FIRST">Newest First</option>
-		             <option value="OLDEST_FIRST">Oldest First</option>
-		           </select>
-		         </div>
-		        </div>
-		    </div>
-		    <div class="row">
-		      <div class="col-xs-3">
-		        <div id="interest_type_hook"></div>
-		      </div>
-		      <div class="col-xs-9">
-		      		<div id="posts_list_hook" class="grid posts-container"></div>
-		      </div>
-		    </div>
-		  </section>
-		  <section id="posts_detail_hook"></section>
+			<section class="posts-detail__page-header">
+				<div class="row">
+					<div class="col-xs-3">
+						<h4 class="">Top Interest Groups</h4>
+					</div>
+					<div class="col-xs-3">
+						<h4>Kairos Classified Posts</h4>
+					</div>
+					<div class="col-xs-4">
+						<div class="ni-dropdown">
+							<select name="" id="">
+								<option value="option4">All</option>
+								<option value="option1">1283746187324681723</option>
+								<option value="option2">9187394812394878239</option>
+							</select>
+						</div>
+					 </div>
+					 <div class="col-xs-2">
+						 <div class="ni-dropdown">
+							 <select name="" id="sort-posts--control">
+								 <option value="NEWEST_FIRST">Newest First</option>
+								 <option value="OLDEST_FIRST">Oldest First</option>
+							 </select>
+						 </div>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-3">
+						<div id="interest_type_hook"></div>
+					</div>
+					<div class="col-xs-9">
+							<div id="posts_list_hook" class="grid posts-container"></div>
+					</div>
+				</div>
+			</section>
+			<section id="posts_detail_hook"></section>
 		</div>
 
 		<script id="interest_type_tmpl" type="text/template">
-		  <div class="interest-container">
-		    <ul class="interest-group__list">
-		      <%_.each(interestTypesData, function(groupItem){%>
-		        <li class="interest-group__item">
-		          <div class="interest-group__item__container">
-		            <div class="interest-group__item--name">
-		              <strong><%=groupItem.name%></strong>
-		            </div>
-		            <div class="interest-group__item--count">
-		              <span><%=groupItem.count%></span>
-		            </div>
-		          </div>
-		          <div class="interest__item__hook"></div>
-		        </li>
-		      <%});%>
-		    </ul>
-		  </div>
+			<div class="interest-container">
+				<ul class="interest-group__list">
+					<%_.each(interestTypesData, function(groupItem){%>
+						<li class="interest-group__item">
+							<div class="interest-group__item__container">
+								<div class="interest-group__item--name">
+									<strong><%=groupItem.name%></strong>
+								</div>
+								<div class="interest-group__item--count">
+									<span><%=groupItem.count%></span>
+								</div>
+							</div>
+							<div class="interest__item__hook"></div>
+						</li>
+					<%});%>
+				</ul>
+			</div>
 		</script>
 
 
 		<script type="text/template" id="interest_tmpl">
-		  <ul class="interest__list">
-		    <%_.each(interestData, function(interestItem) {%>
-		      <li class="interest__item" data-interest-id="<%=interestItem.id%>">
-		        <div class="interest__item--name">
-	            <span><%=interestItem.name%></span>
-		        </div>
-		        <div class="interest__item--count">
-	            <span><%=interestItem.count%></span>
-		        </div>
-		      </li>
-		    <%});%>
-		  </ul>
+			<ul class="interest__list">
+				<%_.each(interestData, function(interestItem) {%>
+					<li class="interest__item" data-interest-id="<%=interestItem.id%>">
+						<div class="interest__item--name">
+							<span><%=interestItem.name%></span>
+						</div>
+						<div class="interest__item--count">
+							<span><%=interestItem.count%></span>
+						</div>
+					</li>
+				<%});%>
+			</ul>
 		</script>
 
 
@@ -112,18 +112,18 @@
 
 
 		<script type="text/template" id="posts_list_tmpl">
-  		<div class="post-items__row">
+			<div class="post-items__row">
 				<%_.each(postsData, function(listItem, listIndex, initialArray){%>
 					<%postDate = moment(listItem.postDate).format('DD MMM YYYY')%>
 					<div class="grid-item">
-					  <div class="post-item__container">
-					    <div class="post-item--post-content">
-					      <p class="post-item--post-text"><%=listItem.content%></p>
-					    </div>
-					    <div class="post-item--post-date">
-					      <p><%=postDate%></p>
-					    </div>
-					  </div>
+						<div class="post-item__container">
+							<div class="post-item--post-content">
+								<p class="post-item--post-text"><%=listItem.content%></p>
+							</div>
+							<div class="post-item--post-date">
+								<p><%=postDate%></p>
+							</div>
+						</div>
 					</div>
 				<%});%>
 			</div>
