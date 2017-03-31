@@ -225,6 +225,7 @@ $container-sizes: (
 
                 &:after {
                   background-image: url(../../../../images/hide-content-small-white-icon.png);
+                  background-image: url(./public/facebook_aud/public/images/hide-content-small-white-icon.png);
                 }
               }
             }
@@ -264,6 +265,7 @@ $container-sizes: (
                 width: 10px;
                 height: 10px;
                 background-image: url(../../../../images/show-content-small-icon.png);
+                background-image: url(./public/facebook_aud/public/images/show-content-small-icon.png);
               }
             }
           }
@@ -348,11 +350,13 @@ $container-sizes: (
     width: 10px;
     height: 10px;
     background-image: url(../../../../images/show-content-small-icon.png);
+    background-image: url(./public/facebook_aud/public/images/show-content-small-icon.png);
   }
 
   &.less {
     &:before {
       background-image: url(../../../../images/hide-content-small-icon.png);
+      background-image: url(./public/facebook_aud/public/images/hide-content-small-icon.png);
     }
   }
 }

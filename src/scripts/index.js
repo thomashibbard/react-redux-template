@@ -29,7 +29,9 @@ $(function() {
 
 
 
-	const API_ROOT_ADDRESS = 'http://104.154.200.92:8080/pentaho/plugin/cda/api/doQuery?path=/public/facebook_aud/fb_posts_detial.cda'; //'http://localhost:8081';
+	// const API_ROOT_ADDRESS = 'http://104.154.200.92:8080/pentaho/plugin/cda/api/doQuery?path=/public/facebook_aud/fb_posts_detial.cda'; //'http://localhost:8081';
+	const ADDRESS_FOR_GLOBAL_WIDGETS = '../../../plugin/cda/api/doQuery?path=/public/cde/widgets/sharedResources.cda&dataAccessId=globalGetAudienceDefinition&paramfb_audience_id=6053840375154';
+	const API_ROOT_ADDRESS = '../../../plugin/cda/api/doQuery?path=/public/facebook_aud/fb_posts_detial.cda';
 	const GLOBAL_STORE_NAME = 'PostsGlobalStore';
 	const ANIMATION_DURATION = 500;
 	const SHOW_MORE_TEXT = 'More';
@@ -100,9 +102,10 @@ $(function() {
 			.resultset
 			.map( interestTypes => (
 				{
-					id: interestTypes[0],
-					name: interestTypes[1],
-					count: interestTypes[2]
+					name: interestTypes[0],
+					studyId: interestTypes[0],
+					ruleId: interestTypes[2],
+					count: interestTypes[3]
 				}
 			)
 		)
@@ -113,10 +116,12 @@ $(function() {
 			.resultset
 			.map( interest => (
 				{
-					id: interest[0],
-					name: interest[1],
-					interestTypesParent: interest[2],
-					count: interest[3],
+				id: interest[0],
+				name: interest[1],
+				interestTypesParent: interest[2],
+				studyId: interest[3],
+				ruleId:  interest[4],
+				count: interest[5]
 				}
 			)
 		)
@@ -263,7 +268,9 @@ $(function() {
 					.then( postsRes => {
 						setLocalStorage(GLOBAL_STORE_NAME, 'postsData', postsRes);
 						setLocalStorage(GLOBAL_STORE_NAME, 'currentlyShowingPostsFor', 'all');
+						resetSortFilter();
 						buildPosts();
+
 					});
 			}
 		};
@@ -299,6 +306,8 @@ $(function() {
 			$objs.interestContainer.on('click', '.interest__item', (evt) => {
 				const $this = $(evt.currentTarget);
 				const interestId = $this.data().interestId;
+				$this.addClass('active');
+				$('.interest__item').not($this).removeClass('active')
 				getFullPostsByInterest(window.parmStudyId, window.parmRuleId, interestId)
 					.then( postsByInterest => {
 						setLocalStorage(GLOBAL_STORE_NAME, 'currentlyShowingPostsFor', 'interest');
@@ -370,6 +379,7 @@ $(function() {
 
 	const resetSortFilter = () => {
 		$('#sort-posts--control').val('NEWEST_FIRST');
+		setLocalStorage(GLOBAL_STORE_NAME, 'sortDirection', 'NEWEST_FIRST');
 	};
 
 	const resetInterestTypeFilters = $currentlyToggling => {
@@ -381,7 +391,7 @@ $(function() {
 
 
 
-
+	// $.ajaxStart()
 
 
 	const handleXHRErr = (jqXHR, textStatus, errorThrown) => {
