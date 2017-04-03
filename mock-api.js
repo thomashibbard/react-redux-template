@@ -68,8 +68,8 @@
 	);
 
 	const getFullInterestTypes = () => (
-		{"queryInfo":{"totalRows":"11"},"resultset":[[144100,"Broad Interests",116],[116509,"Celebrities",16],[144277,"Media & Web",13],[116493,"Brands",8],[147122,"Broad Interests",6],[140946,"TV",5],[116512,"Events & Sponsorships",4],[116516,"Musicians",3],[116520,"Sports Figures",2],[145223,"Apps",1],[117079,"Movies",1]],"metadata":[{"colIndex":0,"colType":"Integer","colName":"id"},{"colIndex":1,"colType":"String","colName":"interest_type"},{"colIndex":2,"colType":"Numeric","colName":"mentions"}]}
-	)	;
+		{"queryInfo":{"totalRows":"4"},"resultset":[["Sports Figures","6059927546954","1864147183855576",26],["Brands","6059927546954","286497791785351",4],["Broad Interests","6059927546954","1864147183855576",1],["Celebrities","6059927546954","1864147183855576",1]],"metadata":[{"colIndex":0,"colType":"String","colName":"interest_type"},{"colIndex":1,"colType":"String","colName":"fb_study_id"},{"colIndex":2,"colType":"String","colName":"fb_rule_id"},{"colIndex":3,"colType":"Numeric","colName":"mentions"}]}
+	);
 
 	const getFullInterestsByInterestType = () => (
 		{"queryInfo":{"totalRows":"3"},"resultset":[[770898,"Home Depot","Brands (Syndicated)",1],[771130,"Walmart","Brands (Syndicated)",1],[772344,"Bojangles' Famous Chicken 'n Biscuits","Brands (Syndicated)",1]],"metadata":[{"colIndex":0,"colType":"Integer","colName":"id"},{"colIndex":1,"colType":"String","colName":"name"},{"colIndex":2,"colType":"String","colName":"interest_type"},{"colIndex":3,"colType":"Numeric","colName":"mentions"}]}
@@ -116,49 +116,19 @@
 
 */
 
-const cookie = 'JSESSIONID=6EF62ACDA900EDF075535FBEA2E1DAF9';
-const headers = {
-	'Cookie': cookie
-}
-const options = {
-	hostname: '104.154.200.92',
-	port: 8080,
-	path: '/pentaho/plugin/cda/api/doQuery?path=/public/facebook_aud/fb_posts_detial.cda&dataAccessId=getFullPostsByInterestType&paramstudy_id=6053840375154&paramrule_id=%25&paraminterest_type=Brands+(Syndicated)',
-	method: 'GET',
-	headers: {
-		'Cookie': cookie
-	}
-}
-
-var url = 'http://104.154.200.92/pentaho/plugin/cda/api/doQuery?path=/public/facebook_aud/fb_posts_detial.cda&dataAccessId=getFullPostsByInterestType&paramstudy_id=6053840375154&paramrule_id=%25&paraminterest_type=Brands+(Syndicated)';
-var opt = {
-	method: 'GET',
-	cookies: cookie,
-	headers: {
-		'Access-Control-Allow-Origin': '*'
-	},
-	auth: {
-		username: 'supportadvanced@email.com',
-		password: 'decisions789'
-	}
-};
-
-const F = () => {
-	console.log('begining');
-	requestify.request(url, opt).then(function(response) {
-	    // Get the response body (JSON parsed - JSON response or jQuery object in case of XML response)
-	    console.log( response.getCode() );
-	    response.getBody();
-
-	    // Get the response raw body
-	    response.body;
-	}, (err) => {
-		console.log('err', err);
-	})
-}
-
-F();
-
+// const cookie = 'JSESSIONID=6EF62ACDA900EDF075535FBEA2E1DAF9';
+// const headers = {
+// 	'Cookie': cookie
+// }
+// const options = {
+// 	hostname: '104.154.200.92',
+// 	port: 8080,
+// 	path: '/pentaho/plugin/cda/api/doQuery?path=/public/facebook_aud/fb_posts_detial.cda&dataAccessId=getFullPostsByInterestType&paramstudy_id=6053840375154&paramrule_id=%25&paraminterest_type=Brands+(Syndicated)',
+// 	method: 'GET',
+// 	headers: {
+// 		'Cookie': cookie
+// 	}
+// }
 
 
 

@@ -4,12 +4,12 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>react boilerplate</title>
+		<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+		<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script> -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.css">
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="./dist/styles/main.css">
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
-		<script type="text/javascript" src="http://masonry.desandro.com/masonry.pkgd.js"></script>
-		<script type="text/javascript" src="https://unpkg.com/isotope-layout@3.0.3/dist/isotope.pkgd.min.js"></script>
+		<!-- <script type="text/javascript" src="http://masonry.desandro.com/masonry.pkgd.js"></script> -->
 	</head>
 	<body>
 		<div class="container">
@@ -23,7 +23,7 @@
 					</div>
 					<div class="col-xs-4">
 						<div class="ni-dropdown">
-							<select name="" id="">
+							<select name="" id="study-rule-select">
 								<option value="option4">All</option>
 								<option value="option1">1283746187324681723</option>
 								<option value="option2">9187394812394878239</option>
@@ -50,6 +50,17 @@
 			</section>
 			<section id="posts_detail_hook"></section>
 		</div>
+
+		<script id="pagination_tmpl" type="text/template">
+			div.pagination__container>
+			<div class="pagination__control--prev">&gt;</div>
+
+			<%var i = 0;while(i < paginationData.numPages){%>
+				<div class="pagination__control--indexed"><%=index%></div>
+			<%});%>
+
+			<div class="pagination__control--next">&lt;</div>
+		</script>
 
 		<script id="interest_type_tmpl" type="text/template">
 			<div class="interest-container">
@@ -113,7 +124,7 @@
 
 		<script type="text/template" id="posts_list_tmpl">
 			<div class="post-items__row">
-				<%_.each(postsData, function(listItem, listIndex, initialArray){%>
+				<%_.each(postsData.posts, function(listItem, listIndex, initialArray){%>
 					<%postDate = moment(listItem.postDate).format('DD MMM YYYY')%>
 					<div class="grid-item">
 						<div class="post-item__container">
@@ -127,10 +138,18 @@
 					</div>
 				<%});%>
 			</div>
+			<button class="pagination__control--prev">&lt;</button>
+				<%console.log(postsData)%>
+				<%var i = 0;%>
+				<%while(i < postsData.pagination.numPages){%>
+					<button class="pagination__control--indexed" data-page-index="<%=i%>"><%=i%></button>
+					<%i++;%>
+				<%}%>
+			<button class="pagination__control--next">&gt;</button>
 		</script>
 
 
 
-		<script src="./dist/scripts/bundle.js"></script>
 	</body>
 </html>
+		<script src="./dist/scripts/posts-content-bundle.js" type="text/javascript"></script>
