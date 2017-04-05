@@ -481,6 +481,12 @@ $post-text-color: #1fa555;
       border: 1px solid $main-highlight-color;
       border-radius: 50%;
       color: $main-highlight-color;
+      cursor: default;
+
+      &.disabled {
+        color: lightGrey;
+        border-color: lightGrey;
+      }
     }
 
     &[class$="--next"]{

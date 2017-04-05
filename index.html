@@ -122,15 +122,13 @@
 							numPaginationButtons = postsData.pagination.numPaginationButtons %>
 
 				<%if(numPosts > postsPerPage){%>
-					<%if(currentPage > 0){%>
-						<button class="pagination__control--prev--all" data-page-index="0">&laquo;</button>
-						<button class="pagination__control--prev" data-page-index="<%=currentPage-1%>">&lsaquo;</button>
-					<%}%>
+						<button class="<%=currentPage > 0 ? '' : 'disabled ' %>pagination__control--prev--all" data-page-index="0">&laquo;</button>
+						<button class="<%=currentPage > 0 ? '' : 'disabled ' %>pagination__control--prev" data-page-index="<%=currentPage-1%>">&lsaquo;</button>
 
 					<%var i = numPages - numPaginationButtons%>
 					<%if(currentPage > i){%>
 						<%console.log('in IF');%>
-					    <%while(i <= numPages){%>
+					    <%while(i < numPages){%>
 					        <button class="pagination__control--indexed <%=currentPage === i ? 'active' : ''%>" data-page-index="<%=i%>"><%=i+1%></button>
 					        <%i++;%>
 					    <%}%>
@@ -143,12 +141,8 @@
 					    <%}%>
 					<%}%>
 
-
-
-					<%if(currentPage+1 < numPages){%>
-						<button class="pagination__control--next" data-page-index="<%=currentPage+1%>">&rsaquo;</button>
-						<button class="pagination__control--next--all" data-page-index="<%=numPages-1%>">&raquo;</button>
-					<%}%>
+						<button class="<%=currentPage+1 < numPages ? '' : 'disabled '%> pagination__control--next" data-page-index="<%=currentPage+1%>">&rsaquo;</button>
+						<button class="<%=currentPage+1 < numPages ? '' : 'disabled '%> pagination__control--next--all" data-page-index="<%=numPages-1%>">&raquo;</button>
 				<%}%>
 			</div>
 		</script>

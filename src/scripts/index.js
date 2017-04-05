@@ -443,7 +443,7 @@
 		 	$('#loading').remove();
 		 });
 
-		$('body').on('click', '[class^="pagination__control"]', goToPage);
+		$('body').on('click', '[class*="pagination__control"]', goToPage);
 
 
 
