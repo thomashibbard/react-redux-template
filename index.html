@@ -4,12 +4,12 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>react boilerplate</title>
-		<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-		<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script> -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="./dist/styles/main.css">
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
-		<!-- <script type="text/javascript" src="http://masonry.desandro.com/masonry.pkgd.js"></script> -->
+		<script type="text/javascript" src="http://masonry.desandro.com/masonry.pkgd.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -52,14 +52,13 @@
 		</div>
 
 		<script id="pagination_tmpl" type="text/template">
-			div.pagination__container>
-			<div class="pagination__control--prev">&gt;</div>
-
-			<%var i = 0;while(i < paginationData.numPages){%>
-				<div class="pagination__control--indexed"><%=index%></div>
-			<%});%>
-
-			<div class="pagination__control--next">&lt;</div>
+			<div class="pagination__container">
+				<div class="pagination__control--prev">&gt;</div>
+				<%var i = 0;while(i < paginationData.numPages){%>
+					<div class="pagination__control--indexed"><%=index%> asdf</div>
+				<%});%>
+				<div class="pagination__control--next">&lt;</div>
+			</div>
 		</script>
 
 		<script id="interest_type_tmpl" type="text/template">
@@ -98,30 +97,6 @@
 			</ul>
 		</script>
 
-
-		<script type="text/template" id="posts_list_tmpl----dep">
-			<div class="post-items__row row">
-			<%_.each(postsData, function(listItem, listIndex, initialArray){%>
-				<%postDate = moment(listItem.postDate).format('DD MMM YYYY')%>
-
-				<div class="col-xs-4 post-item">
-					<div class="post-item__container">
-						<div class="post-item--post-content">
-							<p><%=listItem.content%><br></p>
-						</div>
-						<div class="post-item--post-date">
-							<p><%=postDate%></p>
-						</div>
-					</div>
-				</div>
-
-				<%if((listIndex+1)%3 === 0){%>
-					 </div><div class="post-items__row row">
-				<%}%>
-			<%});%>
-		</script>
-
-
 		<script type="text/template" id="posts_list_tmpl">
 			<div class="post-items__row">
 				<%_.each(postsData.posts, function(listItem, listIndex, initialArray){%>
@@ -138,14 +113,44 @@
 					</div>
 				<%});%>
 			</div>
-			<button class="pagination__control--prev">&lt;</button>
+			<div class="pagination__container">
 				<%console.log(postsData)%>
-				<%var i = 0;%>
-				<%while(i < postsData.pagination.numPages){%>
-					<button class="pagination__control--indexed" data-page-index="<%=i%>"><%=i%></button>
-					<%i++;%>
+				<%var currentPage = postsData.pagination.currentPage,
+							numPosts = postsData.pagination.numPosts,
+							numPages = postsData.pagination.numPages,
+							postsPerPage = postsData.pagination.postsPerPage,
+							numPaginationButtons = postsData.pagination.numPaginationButtons %>
+
+				<%if(numPosts > postsPerPage){%>
+					<%if(currentPage > 0){%>
+						<button class="pagination__control--prev--all" data-page-index="0">&laquo;</button>
+						<button class="pagination__control--prev" data-page-index="<%=currentPage-1%>">&lsaquo;</button>
+					<%}%>
+
+					<%var i = numPages - numPaginationButtons%>
+					<%if(currentPage > i){%>
+						<%console.log('in IF');%>
+					    <%while(i <= numPages){%>
+					        <button class="pagination__control--indexed <%=currentPage === i ? 'active' : ''%>" data-page-index="<%=i%>"><%=i+1%></button>
+					        <%i++;%>
+					    <%}%>
+					<%}else{%>
+					    <%var c = currentPage;%>
+					    <%console.log('current page', c);%>
+					    <%while(c < currentPage + numPaginationButtons){%>
+					        <button class="pagination__control--indexed <%=currentPage === c ? 'active' : ''%>" data-page-index="<%=c%>"><%=c+1%></button>
+					        <%c++%>
+					    <%}%>
+					<%}%>
+
+
+
+					<%if(currentPage+1 < numPages){%>
+						<button class="pagination__control--next" data-page-index="<%=currentPage+1%>">&rsaquo;</button>
+						<button class="pagination__control--next--all" data-page-index="<%=numPages-1%>">&raquo;</button>
+					<%}%>
 				<%}%>
-			<button class="pagination__control--next">&gt;</button>
+			</div>
 		</script>
 
 

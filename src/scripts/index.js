@@ -1,14 +1,15 @@
 // import 'babel-polyfill';
-import { _ } from 'underscore';
+// import { _ } from 'underscore';
 // window._ = _;
-import $ from 'jquery';
-window.$ = $;
-window.jQuery = $;
-import Masonry from 'masonry-layout'
+// import $ from 'jquery';
+// window.$ = $;
+// window.jQuery = $;
+// import Masonry from 'masonry-layout';
 
 
 // window.$ = $;
 // window.jQuery = jQuery;
+(function(window, document, $, _, Masonry) {
 
 	$(function() {
 
@@ -48,6 +49,7 @@ import Masonry from 'masonry-layout'
 
 		const GLOBAL_STORE_NAME = 'PostsGlobalStore';
 		const POSTS_PER_PAGE = 10;
+		const NUM_PAGINATION_BUTTONS = 5;
 		const ANIMATION_DURATION = 500;
 		const SHOW_MORE_TEXT = 'More';
 		const SHOW_LESS_TEXT = 'Close';
@@ -90,22 +92,19 @@ import Masonry from 'masonry-layout'
 		);
 
 		const getFullPostsByInterestType = (studyId, ruleId, interestType) => (
-			$.get(`${DEV_API}/api/getFullPostsByInterestType/`)
+			$.get(`${DEV_API}/api/getFullPostsByInterestType/${interestType}`)
 			// $.getJSON(`${LOCAL_API}&dataAccessId=getFullPostsByInterestType&paramstudy_id=${studyId}&paramrule_id=${encodeURIComponent(ruleId)}&paraminterest_type=${encodeURIComponent(interestType)}`)
 		);
 
 		const getFullPostsByInterest = (studyId, ruleId, interestId) => (
-			$.get(`${DEV_API}/api/getFullPostsByInterest/`)
+			$.get(`${DEV_API}/api/getFullPostsByInterest/${interestId}`)
 			// $.getJSON(`${LOCAL_API}&dataAccessId=getFullPostsByInterest&paramstudy_id=${studyId}&paramrule_id=${encodeURIComponent(ruleId)}&paraminterest_id=${interestId}`)
 		);
 
-		const processPosts = (posts, sortDirection) => (
-			{
-				posts: (posts.resultset
-					.slice(
-						getLocalStorage(GLOBAL_STORE_NAME).displayedPageIndex * POSTS_PER_PAGE,
-						POSTS_PER_PAGE
-					)
+		const processPosts = (posts, sortFlag = true, sortDirection) => {
+			var temp = {
+				posts: (
+					posts
 					.map(post => ({
 							dateReceived: post[0],
 							postDate: post[1],
@@ -116,17 +115,18 @@ import Masonry from 'masonry-layout'
 				.sort(sortPosts(sortDirection))
 				),
 				pagination: {
-					displayedPageIndex: getLocalStorage(GLOBAL_STORE_NAME).displayedPageIndex,
+					// displayedPageIndex: getLocalStorage(GLOBAL_STORE_NAME).displayedPageIndex,
 					postsPerPage: POSTS_PER_PAGE,
-					numPosts: posts.resultset.length,
-					numPages:  posts.resultset.length/POSTS_PER_PAGE
+					numPosts: posts.length,
+					numPages: Math.ceil(posts.length/POSTS_PER_PAGE),
+					numPaginationButtons: NUM_PAGINATION_BUTTONS
 				}
 			}
-		);
+			return temp;
+		};
 
-		const processInterestTypes = interestTypesJSON => (
-			interestTypesJSON
-				.resultset
+		const processInterestTypes = interestTypes => (
+			interestTypes
 				.map( interestTypes => (
 					{
 						name: interestTypes[0],
@@ -219,7 +219,7 @@ import Masonry from 'masonry-layout'
 		};
 
 		const buildInterestFilters = (firstRun = false, interestTypesData) => {
-			interestTypesData = processInterestTypes(interestTypesData);
+			interestTypesData = processInterestTypes(interestTypesData.resultset);
 			const interestTypesHook = $('#interest_type_hook');
 			const interestTypesTmpl = $('#interest_type_tmpl').html();
 			const interestTypesRend = _.template(interestTypesTmpl)({ interestTypesData });
@@ -229,24 +229,23 @@ import Masonry from 'masonry-layout'
 			}
 		};
 
-		const buildPosts = () => {
-			const postsData = processPosts(getLocalStorage(GLOBAL_STORE_NAME).postsData, getLocalStorage(GLOBAL_STORE_NAME).sortDirection);
+		const buildPosts = (sortFlag = true, pageId = 0) => {
+			const postsData = getLocalStorage(GLOBAL_STORE_NAME).postsData;
+			postsData.pagination.currentPage = pageId;
+			const sliceStart = getLocalStorage(GLOBAL_STORE_NAME).displayedPageIndex * POSTS_PER_PAGE;
+			const sliceEnd = sliceStart + POSTS_PER_PAGE;
+			postsData.posts = postsData.posts.slice(sliceStart, sliceEnd);
+
 			const $postsHook = $('#posts_list_hook');
 			const postsTmpl = $('#posts_list_tmpl').html();
 			const postsRend = _.template(postsTmpl)({ postsData });
 			$postsHook.html(postsRend);
 			hideLongText();
-			mosonrizeGrid(true);
+			mosonrizeGrid();
 		};
 
 
 		const mosonrizeGrid = (firstLoad) => {
-			// $('.post-items__row').masonry({
-			// 	itemSelector: '.grid-item',
-			// 	columnWidth: 263,
-			// 	gutter: 10,
-			// });
-
 			const msnry = new Masonry(document.querySelector('.post-items__row'), {
 				itemSelector: '.grid-item',
 				columnWidth: 263,
@@ -256,10 +255,10 @@ import Masonry from 'masonry-layout'
 		};
 
 
-		/* FILTER BY INTEREST GROUP */
+		/* FILTER BY INTEREST TYPE */
 		const bindInterestTypesClick = () => {
 			const toggleInterests = (evt) => {
-
+				debugger;
 				let $currentlyToggling = $(evt.currentTarget);
 				if($currentlyToggling.hasClass('active')) {
 					//toggling button off
@@ -270,12 +269,11 @@ import Masonry from 'masonry-layout'
 						.find('.interest-group__item--name strong')
 						.text();
 					$.when(
-
 						getFullInterestsByInterestType(window.parmStudyId, window.parmRuleId, interestTypeName),
 						getFullPostsByInterestType(window.parmStudyId, window.parmRuleId, interestTypeName)
 					)
 					.done((interestsByInterestTypeRes, postsByGroupRes) => {
-						setLocalStorage(GLOBAL_STORE_NAME, 'postsData', postsByGroupRes[0]);
+						setLocalStorage(GLOBAL_STORE_NAME, 'postsData', processPosts(postsByGroupRes[0].resultset));
 						setLocalStorage(GLOBAL_STORE_NAME, 'currentlyShowingPostsFor', 'interestType');
 						buildPosts();
 						updateInterests(interestsByInterestTypeRes[0], $currentlyToggling);
@@ -294,11 +292,11 @@ import Masonry from 'masonry-layout'
 
 
 				//reset with all posts if no interest type is selected
-				if($('.interest-group__item.active').size() === 0){
+				if($('.interest-group__item.active').length === 0){
 
 					getPosts(window.parmStudyId, window.parmRuleId)
 						.then( postsRes => {
-							setLocalStorage(GLOBAL_STORE_NAME, 'postsData', postsRes);
+							setLocalStorage(GLOBAL_STORE_NAME, 'postsData', processPosts(postsRes.resultset));
 							setLocalStorage(GLOBAL_STORE_NAME, 'currentlyShowingPostsFor', 'all');
 							resetSortFilter();
 							buildPosts();
@@ -343,7 +341,7 @@ import Masonry from 'masonry-layout'
 					getFullPostsByInterest(window.parmStudyId, window.parmRuleId, interestId)
 						.then( postsByInterest => {
 							setLocalStorage(GLOBAL_STORE_NAME, 'currentlyShowingPostsFor', 'interest');
-							setLocalStorage(GLOBAL_STORE_NAME, 'postsData', postsByInterest);
+							setLocalStorage(GLOBAL_STORE_NAME, 'postsData', processPosts(postsByInterest.resultset));
 							buildPosts();
 						});
 				});
@@ -369,7 +367,7 @@ import Masonry from 'masonry-layout'
 		.done((interestTypesRes, postsRes) => {
 			// console.log('posts content bundle >>> page load');
 			setLocalStorage(GLOBAL_STORE_NAME, 'interestTypesData', interestTypesRes[0]);
-			setLocalStorage(GLOBAL_STORE_NAME, 'postsData', postsRes[0]);
+			setLocalStorage(GLOBAL_STORE_NAME, 'postsData', processPosts(postsRes[0].resultset));
 			buildInterestFilters(true, interestTypesRes[0]);
 			setLocalStorage(GLOBAL_STORE_NAME, 'currentlyShowingPostsFor', 'all');
 			buildPosts();
@@ -380,14 +378,20 @@ import Masonry from 'masonry-layout'
 
 
 		/* FILTER BY INTEREST */
-		const bindInterestClick = () => {
-			resetSortFilter();
-		};
+		// const bindInterestClick = () => {
+		// 	resetSortFilter();
+		// };
 
 
 		$('body').on('change', '#sort-posts--control', evt => {
 			// window.globalStore.sortDirection =
-			setLocalStorage(GLOBAL_STORE_NAME, 'sortDirection', $(evt.currentTarget).children(':selected').val())
+			const sortDirection =  $(evt.currentTarget).children(':selected').val();
+			setLocalStorage(GLOBAL_STORE_NAME, 'sortDirection', sortDirection);
+
+			var tempPosts = getLocalStorage(GLOBAL_STORE_NAME).postsData;
+			tempPosts.posts.sort(sortPosts(sortDirection))
+			setLocalStorage(GLOBAL_STORE_NAME, 'postsData', tempPosts);
+			debugger;
 			buildPosts();
 		});
 
@@ -401,7 +405,7 @@ import Masonry from 'masonry-layout'
 			.done((interestTypesRes, postsRes) => {
 				// console.log('posts content bundle >>> page load');
 				setLocalStorage(GLOBAL_STORE_NAME, 'interestTypesData', interestTypesRes[0]);
-				setLocalStorage(GLOBAL_STORE_NAME, 'postsData', postsRes[0]);
+				setLocalStorage(GLOBAL_STORE_NAME, 'postsData', processPosts(postsRes[0].resultset));
 				buildInterestFilters(false, interestTypesRes[0]);
 				setLocalStorage(GLOBAL_STORE_NAME, 'currentlyShowingPostsFor', 'all');
 				buildPosts();
@@ -424,10 +428,11 @@ import Masonry from 'masonry-layout'
 		const goToPage = (evt) => {
 			const $this = $(evt.currentTarget);
 			const pageId = $this.data().pageIndex;
-			debugger;
+
 			setLocalStorage(GLOBAL_STORE_NAME, 'displayedPageIndex', pageId);
 			console.log('going to page', pageId);
-			buildPosts();
+			const sortFlag = false;
+			buildPosts(sortFlag, pageId);
 		};
 
 		 $( document ).ajaxStart( evt => {
@@ -450,4 +455,5 @@ import Masonry from 'masonry-layout'
 		};
 
 	});
+})(window, document, jQuery, _, Masonry);
 
