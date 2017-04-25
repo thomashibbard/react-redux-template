@@ -1,24 +1,10 @@
-// export default (n = 0) => {
-
-//   const element = document.createElement('pre');
-//   const el = document.getElementById('n');
-//   setInterval(function() {
-//   	element.innerHTML = `<span>${n+=2}</span>`;
-//   }, 500);
-
-
-//   return element;
-
-// };
-
-
 import React from 'react';
 // import { reactDOM } from 'react-dom';
 
 // import React from 'react';
-import styles from './App.scss';
+import styles from '../App.scss';
 console.log('styles', Object.keys(styles));
-class App extends React.Component {
+class AudienceList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -31,6 +17,7 @@ class App extends React.Component {
 		let self = this;
 		return (
 		  <div className="app">
+		  	<span>aud list</span>
 		    <button className="b" onClick={self.add}>{self.state.n}</button>
 		  </div>
 		);
@@ -39,9 +26,9 @@ class App extends React.Component {
 	add() {
 		let self = this;
 		self.setState((prevState, props) => {
-		  return {n: prevState.n + 50};
+		  return {n: prevState.n + 1000};
 		});
 	}
 }
 
-export default App;
+export default AudienceList;
