@@ -6,6 +6,7 @@ const webpack = require('webpack');
 
 /* plugins */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const PATHS = {
   app: resolve(__dirname, 'app', 'index.js'),
@@ -50,7 +51,9 @@ const commonConfig = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: [ 'babel-loader', ],
+        use: [
+          'babel-loader',
+        ],
         exclude: /node_modules/
       },
       // {
@@ -63,7 +66,7 @@ const commonConfig = {
           {
             loader: 'style-loader',
             options: {
-              sourceMap: true
+              sourceMap: true,
             }
           },
           {
@@ -74,12 +77,6 @@ const commonConfig = {
               sourceMap: true
             }
           },
-          // {
-          //   loader: 'postcss-loader',
-          //   options: {
-          //     sourceMap: true
-          //   }
-          // },
           {
             loader: 'sass-loader',
             options: {
@@ -92,16 +89,23 @@ const commonConfig = {
             }
           }
         ],
-      }
+      },
+      // {
+      //   test: /\.css$/,
+      //   use: ExtractTextPlugin.extract({
+      //     fallback: "style-loader",
+      //     use: "css-loader"
+      //   })
+      // }
     ]
   },
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     // enable HMR globally
-
     new webpack.NamedModulesPlugin(),
     // prints more readable module names in the browser console on HMR updates
+    new ExtractTextPlugin("styles.css"),
   ],
 };
 
