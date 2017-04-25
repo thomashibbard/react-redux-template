@@ -16,7 +16,7 @@ import React from 'react';
 // import { reactDOM } from 'react-dom';
 
 // import React from 'react';
-import styles from './App.css';
+import styles from './App.scss';
 console.log('styles', Object.keys(styles));
 class App extends React.Component {
 	constructor(props) {
@@ -30,8 +30,8 @@ class App extends React.Component {
 	render () {
 		let self = this;
 		return (
-		  <div className={styles.app}>
-		    <button className={styles.b} onClick={self.add}>{self.state.n}</button>
+		  <div className="app">
+		    <button className="b" onClick={self.add}>{self.state.n}</button>
 		  </div>
 		);
 	}
@@ -39,7 +39,7 @@ class App extends React.Component {
 	add() {
 		let self = this;
 		self.setState((prevState, props) => {
-		  return {n: prevState.n + 100};
+		  return {n: prevState.n + 50};
 		});
 	}
 }

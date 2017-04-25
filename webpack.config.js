@@ -53,11 +53,47 @@ const commonConfig = {
         use: [ 'babel-loader', ],
         exclude: /node_modules/
       },
+      // {
+      //   test: /\.css$/,
+      //   use: [ 'style-loader', 'css-loader?modules', ],
+      // },
       {
-        test: /\.css$/,
-        use: [ 'style-loader', 'css-loader?modules', ],
-      },
-    ],
+        test: /\.s?css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              // localIdentName: '[hash:base64]-[name]-[local]',
+              // modules: true,
+              sourceMap: true
+            }
+          },
+          // {
+          //   loader: 'postcss-loader',
+          //   options: {
+          //     sourceMap: true
+          //   }
+          // },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              includePaths: [
+                resolve(__dirname, 'node_modules', 'susy', 'sass'),
+                resolve(__dirname, 'node_modules', 'breakpoint-sass', 'stylesheets'),
+                resolve(__dirname, 'sass'),
+              ]
+            }
+          }
+        ],
+      }
+    ]
   },
 
   plugins: [

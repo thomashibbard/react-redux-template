@@ -1,14 +1,19 @@
+$my-color: DarkGoldenRod;
+
 .app {
   text-size-adjust: none;
   font-family: helvetica, arial, sans-serif;
   line-height: 200%;
   padding: 6px 20px 30px;
-  color: red !important;
-}
-.t{
-	font-weight: 800;
+  color: $my-color !important;
+  border: 3px solid DarkMagenta;
+
+	.b {
+		color: $my-color;
+		font-weight: 800;
+	}
 }
 
-.b {
-	color: blue;
+.t {
+	font-weight: 800;
 }
